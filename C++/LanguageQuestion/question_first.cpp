@@ -41,7 +41,7 @@ public:
 int main() 
 {
     //实现你的功能
-    Person person1("DANK1KG",25);
+    Person person1("DANK1NG",25);
     Person person2("Karsa",30);
     cout<<"person1:";
 

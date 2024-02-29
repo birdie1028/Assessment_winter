@@ -27,26 +27,62 @@ Length of Longest Increasing Subsequence: 6
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
-class LongestIncreasingSubsequence {
+class LongestIncreasingSubsequence 
+{
 public:
-    static pair<int, vector<int>> findLongestIncreasingSubsequence(const vector<int>& nums) {
-        // TODO: 添加你的代码，实现你的功能
-        int maxLength = 0;
-        vector<int> longestSubsequence;
+    static pair<int, vector<int>> findLongestIncreasingSubsequence(const vector<int>& nums) 
+    {
+        int n = nums.size();
+        if (n == 0) return {0, {}};
 
-        return { maxLength, longestSubsequence };
+        vector<int> dp(n, 1); 
+
+        int maxLength = 1;
+        int endIndex = 0;
+
+        for (int i = 1; i < n; ++i) {
+            for (int j = 0; j < i; ++j) 
+            {
+                if (nums[i] > nums[j]) 
+                {
+                    dp[i] = max(dp[i], dp[j] + 1);
+                    if (dp[i] > maxLength) 
+                    {
+                        maxLength = dp[i];
+                        endIndex = i;
+                    }
+                }
+            }
+        }
+
+        vector<int> longestSubsequence;
+        longestSubsequence.push_back(nums[endIndex]);
+        int len = maxLength - 1;
+        for (int i = endIndex - 1; i >= 0; --i) {
+            if (dp[i] == len && nums[i] < longestSubsequence.back()) 
+            {
+                longestSubsequence.push_back(nums[i]);
+                len--;
+            }
+        }
+        reverse(longestSubsequence.begin(), longestSubsequence.end());
+
+        return {maxLength, longestSubsequence};
     }
 };
 
-int main() {
+int main() 
+{
     vector<int> input = {10, 22, 9, 33, 21, 50, 41, 60, 80};
 
     auto result = LongestIncreasingSubsequence::findLongestIncreasingSubsequence(input);
 
     cout << "Longest Increasing Subsequence: ";
-    for (int num : result.second) {
+    for (int num : result.second) 
+    {
         cout << num << " ";
     }
     cout << endl;

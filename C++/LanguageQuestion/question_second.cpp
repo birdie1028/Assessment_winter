@@ -17,21 +17,63 @@
  */
 
  #include <iostream>
+ 
+ using namespace std;
 
-class Shape {
+class Shape 
+{
 public:
+    virtual float calculateArea()=0;
     
 };
 
-class Circle : public Shape {
+class Circle : public Shape 
+{
+private:
+    float radius;
+
+public:
+    Circle(float r) : radius(r) 
+    {}
+    float calculateArea() override
+    {
+        double PI = 3.1415926;
+        float res=PI*radius*radius;
+        return res;
+    }
+
 
 };
 
 
-class Rectangle : public Shape {
+class Rectangle : public Shape 
+{
+private:
+    float length;
+    float width;
+public:
+    Rectangle(float l,float w) : length(l),width(w)
+    {}
+
+    float calculateArea() override
+    {
+        float area;
+        area=length*width;
+        return area;
+    }
 
 };
 
-int main() {
+int main() 
+{
     //补充你的代码
+    Circle circle(1.0);
+
+    cout<<"圆的面积："<< circle.calculateArea()<<endl;
+
+    Rectangle rectangle(1,2);
+
+    cout<<"矩形面积："<<rectangle.calculateArea()<<endl;
+
+    return 0;
 }
